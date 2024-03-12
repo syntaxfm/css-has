@@ -1,0 +1,46 @@
+---
+import ThemedCode from "../components/ThemedCode.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<style is:global>
+  li ul {
+    transition-duration: 300ms;
+    transform-origin: top;
+    transform: scaleY(0);
+  }
+
+  li ul a:hover {
+    opacity: 0.5;
+  }
+  
+  li:hover ul {
+    transform: scaleY(1);
+  }
+
+  nav li:has(ul) a:has(+ ul):after {
+    content: " ↓";
+  }
+</style>
+<BaseLayout title="Nested Dropdown">
+  <div class="description">
+    <p>If an li has a ul in it, update the parent anchor content to have " ↓".</p>
+  </div>
+  <ThemedCode lang="css" code=`nav li:has(ul) a:has(+ ul):after {
+  content: " ↓";
+}` />
+  <nav>
+    <ul class="nav-list">
+      <li>
+        <a href="#">About</a>
+      </li>
+      <li>
+        <a href="#">Shows</a>
+        <ul>
+          <li><a href="#">Tasty</a></li>
+          <li><a href="#">Hasty</a></li>
+          <li><a href="#">Supper Club</a></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</BaseLayout>

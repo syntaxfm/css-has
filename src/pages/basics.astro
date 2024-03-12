@@ -1,0 +1,115 @@
+---
+import ThemedCode from "../components/ThemedCode.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+const posts = [
+  {
+    guid: "504ff4ac-eebe-40a7-bbc2-14113e27cb23",
+    url: "https://syntax.fm/739",
+    title: "739: The LoFi Movement: Building Local First Apps",
+    video_embed:
+      '<iframe width="560" height="315" src="https://www.youtube.com/embed/U1uhILa-wmI?si=7a0208JiZq8CTk-t" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+    summary:
+      "Join Wes and Scott as they explore LoFi (local first) web development, delving into CRDT, Websockets, IndexedDB, SQLite, and more. Discover when Local-First shines and when it’s better to steer clear in this episode packed with practical insights.",
+  },
+  {
+    guid: "deea34d6-938c-4322-8d9f-f6c3b2d2d8b1",
+    url: "https://syntax.fm/736",
+    title: "736: CJ Reynolds is Joining Syntax",
+    audio_url: "https://traffic.libsyn.com/syntax/Syntax_-_736.mp3",
+    video_embed:
+      '<iframe width="560" height="315" src="https://www.youtube.com/embed/S4yAx0r2wkY?si=2sgZRoSLM-li6P-J" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
+    summary:
+      "Scott and Wes introduce Syntax’s new Senior Content Producer, CJ Reynolds, who will be creating video deep-dives and companion content for topics covered on the podcast. CJ, also known as the host of Coding Garden, shares his passions for web development, teaching and experimenting with new technologies.",
+    date_published: "2024-02-28T12:00:00.000Z",
+    author: {
+      name: "wes@wesbos.com",
+    },
+  },
+  {
+    guid: "e4dcde6d-82de-49d2-84b1-0a8e1d04a73d",
+    url: "https://syntax.fm/714",
+    title: "714: CSS :has() in Every Browser! 10 Uses",
+    audio_url: "https://traffic.libsyn.com/syntax/Syntax_-_714.mp3",
+    summary:
+      "CSS :has() is out in all browsers and Wes and Scott have got the top 10 reasons you should start using :has() now.",
+    date_published: "2024-01-08T10:00:00.000Z",
+    author: {
+      name: "wes@wesbos.com",
+    },
+  },
+  {
+    guid: "7a90d07c2eb9f653c330dd17c14da6cc",
+    url: "https://traffic.libsyn.com/secure/syntax/Syntax018.mp3",
+    title: "18: All About CSS Grid",
+    summary:
+      "It's a long awaited CSS Grid show! How does it work? When do you use it? What's the difference between Grid and Flexbox?",
+    date_published: "2017-11-08T15:32:22.000Z",
+    author: {
+      name: "wes@wesbos.com",
+    },
+  },
+];
+---
+
+<style is:global>
+  .post div iframe {
+    max-width: 100%;
+  }
+
+  .post audio {
+    width: 100%;
+  }
+
+  .post:has(iframe) {
+    color: #000;
+    background: #beff00;
+  }
+
+  .post:has(audio):has(iframe) {
+    color: #fff;
+    background: #ff474e;
+  }
+
+  .post:has(audio):not(:has(iframe)) {
+    color: #000;
+    background: #00fff5;
+  }
+</style>
+<BaseLayout title="The Basics">
+  <div>
+    <div class="description">
+      <p>Style elements based on their contents.</p>
+      <p>
+        In this example if there is an embeded iframe (video), audio file or
+        both - change the background color of the post.
+      </p>
+    </div>
+    <ThemedCode lang="css"
+      code=`.post:has(iframe) {
+  color: #000;
+  background: #beff00;
+}
+
+.post:has(audio):has(iframe) {
+  color: #fff;
+  background: #FF474E;
+}
+
+.post:has(audio):not(:has(iframe)) {
+  color: #000;
+  background: #00FFF5;
+}` />
+  </div>
+  <section class="posts">
+    {
+      posts.map((data) => (
+        <article class="post">
+          <h2>{data.title}</h2>
+          {data.video_embed && <div set:html={data.video_embed} />}
+          {data.audio_url && <audio controls src={data.audio_url} />}
+          <p>{data.summary}</p>
+        </article>
+      ))
+    }
+  </section>
+</BaseLayout>

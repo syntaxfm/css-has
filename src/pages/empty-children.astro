@@ -1,0 +1,40 @@
+---
+import ThemedCode from "../components/ThemedCode.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<style is:global>
+  .posts {
+    min-width: 400px;
+  }
+  .post {
+    width: 100%;
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  .post:has(> *:empty) {
+    height: 10px;
+    border: 1px dotted #FF474E;
+  }
+</style>
+<BaseLayout title="Empty Children">
+  <div class="description">
+    <p>Select an element if all of it's children are empty.</p>
+    <p>This is useful for skeleton loaders or to flag an element as empty when debugging a page.</p>
+  </div>
+  <ThemedCode lang="css" code=`.post:has(> *:empty) {
+  height: 10px;
+  border: 1px dotted #FF474E;
+}` />
+  <section class="posts">
+    <article class="post">
+      <h2>Hello World</h2>
+    </article>
+    <article class="post">
+      <h2></h2>
+    </article>
+    <article class="post">
+      <h2>Goodbye World</h2>
+    </article>
+  </section>
+</BaseLayout>

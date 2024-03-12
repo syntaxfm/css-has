@@ -1,0 +1,48 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<style>
+	.episode-banner {
+		margin: 1rem auto;
+		max-width: 600px;
+		display: flex;
+		justify-content: center;
+	}
+
+	iframe {
+		max-width: 100%;
+	}
+
+	img {
+		max-width: 100%;
+	}
+</style>
+<BaseLayout title="CSS :has() Examples">
+	<div class="description">
+    <p>Here are some real world use cases and examples of the CSS :has() selector.</p>
+		<p>Choose an example to see :has() in action!</p>
+  </div>
+	<hr>
+	<div class="description">
+		<p>Wes' original tweet:</p>
+	</div>
+	<div class="episode-banner">
+		<blockquote class="twitter-tweet" data-dnt="true" data-theme="dark"><p lang="en" dir="ltr">🔥 As of today, CSS :has() is now supported in every browser! <br><br>This is a next-level selector that opens up a ton of new possibilities. Here are 10 hot tips for using CSS :has() <br><br>Details of each below <a href="https://t.co/Fyd7F6GRDi">pic.twitter.com/Fyd7F6GRDi</a></p>&mdash; Wes Bos (@wesbos) <a href="https://twitter.com/wesbos/status/1737148340322652632?ref_src=twsrc%5Etfw">December 19, 2023</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+	</div>
+	<hr>
+	<div class="description">
+		<p>Listen to Wes and Scott talk about :has in episode #714:</p>
+	</div>
+	<div class="episode-banner">
+		<a target="_blank" rel="noopener" href="https://syntax.fm/show/714/css-has-in-every-browser-10-uses">
+			<img src="/episode-banner.jpg">
+		</a>
+	</div>
+	<hr>
+	<div class="description">
+		<p>Watch CJ go through these examples on YouTube:</p>
+	</div>
+	<div class="episode-banner">
+		<iframe width="560" height="315" src="https://www.youtube.com/embed/k2_QGzJkQXM?si=fEQZlGDZgf9snOtx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+	</div>
+</BaseLayout>

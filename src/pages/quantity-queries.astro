@@ -1,0 +1,58 @@
+---
+import ThemedCode from "../components/ThemedCode.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<style is:global>
+  .cards {
+    display: flex;
+    justify-content: center;
+  }
+
+  .card {
+    background: #000;
+    margin: 0.25rem;
+    padding: 1rem;
+    display: inline-block;
+    border: var(--border);
+  }
+
+  .card:has(> *:nth-child(4n)) {
+    background: #FF474E;
+  }
+</style>
+<BaseLayout title="Quantity Queries">
+  <div class="description">
+    <p>Select an element based on the number of children it has.</p>
+    <p>In this example we change the style of any card with 4 or more elements.</p>
+  </div>
+  <ThemedCode lang="css" code=`.card:has(> *:nth-child(4n)) {
+  background: #FF474E;
+}` />
+  <div class="cards">
+    <article class="card">
+      <div>one</div>
+    </article>
+    <article class="card">
+      <div>one</div>
+      <div>two</div>
+    </article>
+    <article class="card">
+      <div>one</div>
+      <div>two</div>
+      <div>three</div>
+    </article>
+    <article class="card">
+      <div>one</div>
+      <div>two</div>
+      <div>three</div>
+      <div>four</div>
+    </article>
+    <article class="card">
+      <div>one</div>
+      <div>two</div>
+      <div>three</div>
+      <div>four</div>
+      <div>five</div>
+    </article>
+  </div>
+</BaseLayout>

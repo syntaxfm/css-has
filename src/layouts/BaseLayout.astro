@@ -1,0 +1,51 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import "../styles.css";
+import Navbar from "../components/Navbar.svelte";
+import Footer from "../components/Footer.svelte";
+const { title } = Astro.props;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/syntax.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <ViewTransitions fallback="animate" />
+    <style>
+      .title-bar {
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+        margin: 1rem auto 0 auto;
+      }
+      .title-bar .logo {
+        width: 100px;
+      }
+      .title-bar .logo img {
+        width: 100%;
+      }
+      h1 a {
+        text-decoration: none;
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body transition:animate="fade">
+    <div class="title-bar">
+      <div class="logo">
+        <a href="https://syntax.fm/">
+          <img src="/syntax.png">
+        </a>
+      </div>
+      <h1><a href="/">CSS :has() Examples</a></h1>
+    </div>
+    <Navbar client:load />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

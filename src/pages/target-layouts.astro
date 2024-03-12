@@ -1,0 +1,87 @@
+---
+import ThemedCode from "../components/ThemedCode.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<style is:global>
+  img {
+    width: 30%;
+  }
+
+  article {
+    display: grid;
+    outline: 2px solid white;
+    height: 100vh;
+    place-content: center;
+    place-items: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  article h2 {
+    text-align: center;
+    font-size: 10vw;
+    grid-area: heading;
+  }
+
+  article img:nth-child(2) {
+    grid-area: image1;
+  }
+
+  article img:nth-child(3) {
+    grid-area: image2;
+  }
+
+  article:has(> :is(h1, h2, h3, h4, h5, h6):only-child) {
+    grid-template-areas:
+      "heading heading"
+      "heading heading";
+  }
+
+  article:has(h2 + img) {
+    grid-template-areas:
+      "heading heading"
+      "image1 image1";
+  }
+
+  article:has(h2 + img + img) {
+    grid-template-areas:
+      "heading heading"
+      "image1 image2";
+  }
+</style>
+<BaseLayout title="Target Layouts">
+  <div class="description">
+    <p>Change the layout of a grid based on the contents.</p>
+    <p>In this example we have a presentation where each slide might have, a title, a title + image or a title + 2 images.</p>
+    <p>We change the grid-template-areas accordingly.</p>
+  </div>
+  <ThemedCode lang="css" code=`article:has(> :is(h1, h2, h3, h4, h5, h6):only-child) {
+  grid-template-areas:
+    "heading heading"
+    "heading heading";
+}
+
+article:has(h2 + img) {
+  grid-template-areas:
+    "heading heading"
+    "image1 image1";
+}
+
+article:has(h2 + img + img) {
+  grid-template-areas:
+    "heading heading"
+    "image1 image2";
+}` />
+  <article>
+    <h2>My Cool Presentation</h2>
+  </article>
+  <article>
+    <h2>First Section</h2>
+    <img src="/syntax.png" />
+  </article>
+  <article>
+    <h2>Second Section</h2>
+    <img src="/syntax.png" />
+    <img src="/syntax.png" />
+  </article>
+</BaseLayout>

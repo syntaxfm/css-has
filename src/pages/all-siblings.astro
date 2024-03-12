@@ -1,0 +1,54 @@
+---
+import ThemedCode from '../components/ThemedCode.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<style is:global>
+  .cards {
+    display: flex;
+    justify-content: center;
+  }
+
+  .card {
+    background: #000;
+    margin: 0.25rem;
+    padding: 1rem;
+    display: inline-block;
+    cursor: pointer;
+    border: var(--border);
+  }
+
+  .card:hover {
+    transform: scale(1.2);
+    background: #FF474Eee;
+  }
+
+  .cards:has(.card:hover) .card:not(:hover) {
+    opacity: 0.2;
+  }
+</style>
+<BaseLayout title="All Siblings">
+  <div class="description">
+    <p>Select all siblings of a given element.</p>
+    <p>In this example, if a card is being hovered, we change the style of all card elements that are not being hovered.</p>
+  </div>
+  <ThemedCode lang="css" code=`.cards:has(.card:hover) .card:not(:hover) {
+  opacity: 0.2;
+}`; />
+  <section class="cards">
+    <article class="card">
+      One
+    </article>
+    <article class="card">
+      Two
+    </article>
+    <article class="card">
+      Three
+    </article>
+    <article class="card">
+      Four
+    </article>
+    <article class="card">
+      Five
+    </article>
+  </section>
+</BaseLayout>

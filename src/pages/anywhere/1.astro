@@ -1,0 +1,72 @@
+---
+import ThemedCode from "../../components/ThemedCode.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+<style is:global>
+  form {
+    margin: 1rem;
+  }
+
+  .visibility-label {
+    margin-right: 0.5rem;
+  }
+
+  body:has(input.blur-answers:checked) .answer {
+    filter: blur(3px);
+  }
+
+  body:has(input.blur-answers:checked) .visibility-label::before {
+    content: "Hide "
+  }
+
+  body:not(:has(input.blur-answers:checked)) .visibility-label::before {
+    content: "Show "
+  }
+</style>
+<BaseLayout title="Anywhere Selector">
+  <div class="description">
+    <p>Select elements anywhere on the page if a specific selector exists.</p>
+    <p>In this example if the checkbox is checked / unchecked, blur / unblur the answers and change the contents of the checkbox label.</p>
+  </div>
+  <ThemedCode lang="css" code=`body:has(input.blur-answers:checked) .answer {
+  filter: blur(3px);
+}
+
+body:has(input.blur-answers:checked) .visibility-label::before {
+  content: "Hide "
+}
+
+body:not(:has(input.blur-answers:checked)) .visibility-label::before {
+  content: "Show "
+}` />
+  <section class="posts">
+    <form>
+      <label>
+        <span class="visibility-label">answers</span>
+        <input class="blur-answers" type="checkbox" checked>
+      </label>
+    </form>
+    <article class="post">
+      <h2>What is the answer to life the universe and everything?</h2>
+      <p class="answer">42</p>
+    </article>
+    <article class="post">
+      <h2>Which of the following HTML elements are fake: bdi, cite, wbr, sec?</h2>
+      <p class="answer">sec</p>
+    </article>
+    <article class="post">
+      <h2>How could you implement CSS :has with JavaScript?</h2>
+      <p class="answer">
+        document
+          .querySelector('.thing')
+          .closest('.parent');
+      </p>
+    </article>
+    <article class="post">
+      <h2>In CSS Grid, how would I make a grid of 3 equal columns with 20 pixels between them?</h2>
+      <p class="answer">
+        <img src="/css-grid.jpg">
+      </p>
+    </article>
+  </section>
+</BaseLayout>

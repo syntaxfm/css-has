@@ -1,0 +1,88 @@
+---
+import ThemedCode from "../../../components/ThemedCode.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+---
+
+<style is:global>
+  .sub-page {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .sub-page nav {
+    display: flex;
+    justify-content: space-between;
+  }
+  .home-page-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-img {
+    width: 100px;
+  }
+
+  img {
+    width: 300px;
+  }
+
+  .empty {
+    height: 50vh;
+  }
+
+  body:has(.home-page-hero) nav .logo {
+    display: none;
+  }
+
+  body:has(.home-page-hero) .sub-page nav {
+    justify-content: flex-end;
+  }
+</style>
+<BaseLayout title="Anywhere - Home">
+  <div class="description">
+    <p>Select elements anywhere on the page if a specific selector exists.</p>
+    <p>
+      In this example if the hero section is present, hide the logo in the
+      navbar and change the flex box alignment.
+    </p>
+  </div>
+  <ThemedCode lang="css" code=`body:has(.home-page-hero) nav .logo {
+  display: none;
+}
+
+body:has(.home-page-hero) .sub-page nav {
+  justify-content: flex-end;
+}` />
+  <hr>
+  <section class="sub-page" id="page">
+    <nav>
+      <div class="logo">
+        <img class="nav-img" src="/syntax.png" />
+      </div>
+      <ul class="nav-list">
+        <li>
+          <a href="/anywhere/2/#page">Home</a>
+        </li>
+        <li>
+          <a href="/anywhere/2/about#page">About</a>
+        </li>
+      </ul>
+    </nav>
+    <div class="home-page-hero">
+      <img src="/syntax.png" />
+      <h2>A Tasty Treats Podcast for Web Developers</h2>
+    </div>
+    <div class="empty"></div>
+  </section>
+</BaseLayout>
+<script is:inline>
+  function scrollToPage() {
+    if (window.location.hash) {
+      const element = document.querySelector(window.location.hash);
+      if (element) {
+        element.scrollIntoView();
+      }
+    }
+  }
+  document.addEventListener("astro:after-swap", scrollToPage);
+</script>

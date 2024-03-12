@@ -1,0 +1,29 @@
+---
+import ThemedCode from "../components/ThemedCode.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<style is:global>
+  div:has(+ .target) {
+    color: black;
+    background: #fabf46;
+  }
+</style>
+<BaseLayout title="Previous Selector">
+  <div class="description">
+    <p>Select an element above or before a given element.</p>
+  </div>
+  <ThemedCode lang="css" code=`div:has(+ .target) {
+  color: black;
+  background: #fabf46;
+}` />
+  <div class="example">
+    <div>
+      <p>
+        Select Me!
+      </p>
+    </div>
+    <div class="target">
+      <p>The previous div is selected by selecting this div.</p>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,110 @@
+---
+import ThemedCode from "../components/ThemedCode.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<style is:global>
+  .example p {
+    margin-bottom: 1rem;
+  }
+  fieldset {
+    padding: 1rem;
+  }
+
+  label {
+    width: 100%;
+    margin-right: 1rem;
+    padding: 1rem;
+  }
+
+  .error {
+    margin-top: 1.5rem;
+    display: none;
+    color: #ff474e;
+  }
+
+  .success {
+    margin-top: 1.5rem;
+    display: none;
+    color: #beff00;
+  }
+
+  label:has(input:user-valid) {
+    color: #000;
+    background: #beff00;
+  }
+
+  label:has(input:user-invalid) {
+    background: #ff474e;
+  }
+
+  fieldset:has(input:user-valid) {
+    border-left: 10px solid #beff00;
+  }
+
+  fieldset:has(input:user-invalid) {
+    border-left: 10px solid #ff474e;
+  }
+
+  label:has(input:user-valid) ~ .success,
+  fieldset:has(input:user-valid) .success {
+    display: block;
+  }
+
+  label:has(input:user-invalid) ~ .error,
+  fieldset:has(input:user-invalid) .error {
+    display: block;
+  }
+</style>
+<BaseLayout title="Form Validation">
+  <div class="description">
+    <p>
+      Style a label or fieldset and hide / show an error message based on the
+      validation status of it's input.
+    </p>
+    <p>Try typing a string or negative number into these number inputs (tab to blur the input).</p>
+  </div>
+  <ThemedCode lang="css" code=`label:has(input:user-valid) {
+  color: #000;
+  background: #beff00;
+}
+
+label:has(input:user-invalid) {
+  background: #ff474e;
+}
+
+fieldset:has(input:user-valid) {
+  border-left: 10px solid #beff00;
+}
+
+fieldset:has(input:user-invalid) {
+  border-left: 10px solid #ff474e;
+}
+
+label:has(input:user-valid) ~ .success,
+fieldset:has(input:user-valid) .success {
+  display: block;
+}
+
+label:has(input:user-invalid) ~ .error,
+fieldset:has(input:user-invalid) .error {
+  display: block;
+}` />
+  <div class="example">
+    <p>Label Example:</p>
+    <label>
+      Quantity
+      <input type="number" min="0" value="42" />
+    </label>
+    <p class="success">Quantity is valid!</p>
+    <p class="error">Invalid quantity.</p>
+    <hr>
+    <p>Fieldset Example:</p>
+    <fieldset>
+      <label>Amount</label>
+      <input type="number" min="0" value="42" />
+      <p class="success">Amount is valid!</p>
+      <p class="error">Invalid amount.</p>
+    </fieldset>
+  </div>
+</BaseLayout>

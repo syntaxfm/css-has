@@ -1,0 +1,59 @@
+---
+import ThemedCode from '../components/ThemedCode.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<style is:global>
+  .assets {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+    grid-gap: 1rem;
+    padding: 1rem;
+    justify-content: center;
+  }
+
+  .asset p {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--yellow);
+  }
+  .asset {
+    border: 1px solid var(--yellow);
+  }
+  .asset img {
+    width: 100%;
+    height: auto;
+  }
+
+  .asset h2 {
+    text-align: center;
+    font-size: 12px;
+    background: var(--yellow);
+    color: black;
+    margin: 0;
+    padding: 10px 2px;
+  }
+
+  .asset:has(img[src*="black"]) {
+    color: black;
+    background: white;
+  }
+</style>
+<BaseLayout title="Attribute Matching">
+  <div class="description">
+    <p>If the src attribute of an image includes the word "black", change the background to white and foreground to black.</p>
+  </div>
+  <ThemedCode lang="css" code=`.asset:has(img[src*="black"]) {
+  color: black;
+  background: white;
+}` />
+  <div class="assets">
+    <div class="asset">
+      <p>Syntax Logo Yellow</p>
+      <img src="https://syntaxfm.github.io/brand/Syntax%20Wordmark%20Stacked%20-%20yellow.svg" />
+    </div>
+    <div class="asset">
+      <p>Syntax Logo Black</p>
+      <img src="https://syntaxfm.github.io/brand/Syntax%20Wordmark%20Stacked%20-%20black.svg" />
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,143 @@
+---
+// Theme loading in the config does not work... manually setting theme in here.
+// https://docs.astro.build/en/guides/markdown-content/#syntax-highlighting
+// Astro Code component does not support custom transformers, so copying here and adding manually
+// https://github.com/withastro/astro/blob/main/packages/astro/components/Code.astro
+// Transformer from here: https://github.com/joshnuss/shiki-transformer-copy-button/
+import { h } from "hastscript";
+import type { ThemePresets } from "@astrojs/markdown-remark";
+import type {
+  BuiltinLanguage,
+  LanguageRegistration,
+  SpecialLanguage,
+  ThemeRegistration,
+  ThemeRegistrationRaw,
+} from "shikiji";
+import { bundledLanguages } from "shikiji/langs";
+import {
+  createShikiHighlighter
+} from "@astrojs/markdown-remark";
+import justBlackTheme from '../../just-black-theme.json';
+
+interface Props {
+  /** The code to highlight. Required. */
+  code: string;
+  /**
+   * The language of your code.
+   * Supports all languages listed here: https://github.com/shikijs/shiki/blob/main/docs/languages.md#all-languages
+   * Instructions for loading a custom language: https://github.com/shikijs/shiki/blob/main/docs/languages.md#supporting-your-own-languages-with-shiki
+   *
+   * @default "plaintext"
+   */
+  lang?: BuiltinLanguage | SpecialLanguage | LanguageRegistration;
+  /**
+   * The styling theme.
+   * Supports all themes listed here: https://github.com/shikijs/shiki/blob/main/docs/themes.md#all-themes
+   * Instructions for loading a custom theme: https://github.com/shikijs/shiki/blob/main/docs/themes.md#loading-theme
+   *
+   * @default "github-dark"
+   */
+  theme?: ThemePresets | ThemeRegistration | ThemeRegistrationRaw;
+  /**
+   * Multiple themes to style with -- alternative to "theme" option.
+   * Supports all themes found above; see https://github.com/antfu/shikiji#lightdark-dual-themes for more information.
+   */
+  experimentalThemes?: Record<
+    string,
+    ThemePresets | ThemeRegistration | ThemeRegistrationRaw
+  >;
+  /**
+   * Enable word wrapping.
+   *  - true: enabled.
+   *  - false: disabled.
+   *  - null: All overflow styling removed. Code will overflow the element by default.
+   *
+   * @default false
+   */
+  wrap?: boolean | null;
+  /**
+   * Generate inline code element only, without the pre element wrapper.
+   *
+   * @default false
+   */
+  inline?: boolean;
+}
+
+const {
+  code,
+  lang = "plaintext",
+  theme = justBlackTheme,
+  experimentalThemes = {},
+  wrap = false,
+  inline = false,
+} = Astro.props;
+
+// shiki -> shikiji compat
+if (typeof lang === "object") {
+  // `id` renamed to `name` (always override)
+  if ((lang as any).id) {
+    lang.name = (lang as any).id;
+  }
+  // `grammar` flattened to lang itself
+  if ((lang as any).grammar) {
+    Object.assign(lang, (lang as any).grammar);
+  }
+}
+
+const cachedHighlighters = /* @__PURE__ */ new Map();
+function getCachedHighlighter(opts: any) {
+  const key = JSON.stringify(opts, Object.keys(opts).sort());
+  if (cachedHighlighters.has(key)) {
+    return cachedHighlighters.get(key);
+  }
+  const highlighter = createShikiHighlighter(opts);
+  cachedHighlighters.set(key, highlighter);
+  return highlighter;
+}
+
+function addCopyButton() {
+  return {
+    pre(node: any) {
+      const button = h(
+        "button",
+        {
+          class: "copy button ghost",
+          "data-code": code,
+          onclick: `
+          navigator.clipboard.writeText(this.dataset.code);
+          this.classList.add('copied');
+          setTimeout(() => this.classList.remove('copied'), 3000)
+        `,
+        },
+        [h("span", { class: "ready" }), h("span", { class: "success" })],
+      );
+
+      node.children.push(button);
+    },
+  };
+}
+
+const highlighter = await getCachedHighlighter({
+  langs: [
+    typeof lang === "string"
+      ? Object.keys(bundledLanguages).includes(lang)
+        ? lang
+        : "plaintext"
+      : lang,
+  ],
+  theme,
+  experimentalThemes,
+  wrap,
+  transformers: [addCopyButton()],
+});
+
+const html = highlighter.highlight(
+  code,
+  typeof lang === "string" ? lang : lang.name,
+  {
+    inline,
+  }
+);
+---
+
+<Fragment set:html={html} />
